@@ -1,2 +1,9 @@
 Name: Grades
 Data:
+id id_Student id_Course Grade
+0 0 0 5
+1 0 0 4
+2 2 0 3
+3 2 0 4
+4 0 0 2
+5 1 0 3
