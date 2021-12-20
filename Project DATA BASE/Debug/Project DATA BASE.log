@@ -10,9 +10,10 @@ D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Proj
 D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(219,23): warning C4018: <: несоответствие типов со знаком и без знака
 D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(225,23): warning C4018: <: несоответствие типов со знаком и без знака
 D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(226,27): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(279,41): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(290,41): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(302,41): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(376,23): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(384,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(260,41): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(271,41): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(283,41): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(356,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(364,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(435): warning C4715: offerOptions: значение возвращается не при всех путях выполнения
   Project DATA BASE.vcxproj -> D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Debug\Project DATA BASE.exe

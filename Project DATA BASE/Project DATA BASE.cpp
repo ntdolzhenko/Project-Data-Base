@@ -233,25 +233,6 @@ void updateTheTableFile(Table* tableN) {
     fout.close();
 }
 
-void getRequest() {
-    /*
-    string request = "";
-     while(request != "Нет. Закрыть Базу Данных."){
-         cin >> request;
-         if(request == "1") createTheBox();
-         else if (request == "2") createTheData();
-         else if (request == "3") deleteTheBox();
-         else if (request == "4") deleteTheData();
-         else if (request == "5") changeTheBox();
-         else if (request == "6") changeTheData();
-         else if (request == "7") addTheColumn();
-         else if (request == "8") deleteTheColumn();
-         else if (request == "9") showTheTable();
-         else if (request == "10") GPA();
-     }
-     */
-}
-
 void performRequest(Table* workingTable, string request) {
 
     /*
@@ -344,7 +325,6 @@ void performRequest(Table* workingTable, string request) {
     }
 }
 
-
 void offerOptionsForTable(string tableN = "") {
 
     Table* workingTable = 0;
@@ -395,13 +375,14 @@ void getGPA(string studentID, string coursetID) { // Добавить прове
     else  cout << "\nThe table is empty.\n";
 }
 
-void offerOptions() {
+bool offerOptions() {
 
     cout << "\nPlease, choose what you would like to to do and type the number of chosen option (for example: 1).\n";
     cout << "\n1) Show table."; // Показать таблицу
     cout << "\n2) Show all tables."; // Показать все таблицы
     cout << "\n3) Get the student's GPA."; // получить средний балл ученика
-    cout << "\n4) Change the table.\n"; // Изменить таблицу
+    cout << "\n4) Change the table."; // Изменить таблицу
+    cout << "\n5) Finish work and exit.\n"; // Завершить работу программы
 
     string request = "";
     cin >> request;
@@ -414,7 +395,7 @@ void offerOptions() {
         if (tableN == "Students") students.showTheTable();
         else if (tableN == "Courses") courses.showTheTable();
         else if (tableN == "Grades") grades.showTheTable();
-
+        return true;
     }
     // Показать все таблицы - DONE
     else if (request == "2") {
@@ -424,7 +405,7 @@ void offerOptions() {
         cout << endl;
         grades.showTheTable();
         cout << endl;
-
+        return true;
         // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
     }
     // получить средний балл ученика - DONE
@@ -433,18 +414,35 @@ void offerOptions() {
         string studentID = "", subjectID = "";
         cin >> studentID >> subjectID;
         getGPA(studentID, subjectID);
-       // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
+        return true;
+        // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
     }
     // Изменить таблицу
-    else if (request == "4") { 
+    else if (request == "4") {
         cout << "\nPlease, enter the table's name you would like to change:  Students, Courses or Grades.\n";
         string tableN = "";
         cin >> tableN;
         offerOptionsForTable(tableN);
-//        if (tableN == "Students") students.showTheTable();
-//        else if (tableN == "Courses") courses.showTheTable();
-//        else if (tableN == "Grades") grades.showTheTable();
+        return true;
+        //        if (tableN == "Students") students.showTheTable();
+        //        else if (tableN == "Courses") courses.showTheTable();
+        //        else if (tableN == "Grades") grades.showTheTable();
     }
+    else if (request == "5") {
+        cout << endl << "Goodbye!..................\n";
+        return false;
+    }
+}
+
+/*ヾ(-_- )ゞ
+* [¬º-°]¬
+* 👋🏻
+* (⊃｡•́‿•̀｡)⊃
+*/
+
+void getRequest() {
+    bool request = true;
+    while (request == true) request = offerOptions();
 }
 
 void getTables() {  // считываем таблицы в самом начале
@@ -453,7 +451,8 @@ void getTables() {  // считываем таблицы в самом нача�
     readTheTables(&grades);
 }
 
-void setTables(){} // записываем таблицы обратно в файл в самом конце
+//void setTables(){} // записываем таблицы обратно в файл в самом конце
+
 void startOfProg() {
 
     // считываем таблицы из файлов
@@ -461,8 +460,7 @@ void startOfProg() {
     // приветствие
     cout << "Welcome to the Data Base.\n";
     // предлагаем выбор опций
-    offerOptions();
-
+    getRequest();
 }
 
 //////////////////////////////////////////////////////////////////

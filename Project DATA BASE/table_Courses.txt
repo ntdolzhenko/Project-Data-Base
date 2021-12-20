@@ -2,4 +2,6 @@ Name: Courses
 Data:
 id Course_name 
 0 History 
-1 Math
+1 Math 
+0 Literature 
+1 test 
