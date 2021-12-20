@@ -1,8 +1,18 @@
 ﻿  Project DATA BASE.cpp
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(144,7): error C2460: Table::students: использует "Table", определяемый в настоящий момент
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(64): message : см. объявление "Table"
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(145,7): error C2460: Table::courses: использует "Table", определяемый в настоящий момент
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(64): message : см. объявление "Table"
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(146,7): error C2460: Table::grades: использует "Table", определяемый в настоящий момент
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(64): message : см. объявление "Table"
-D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(64): fatal error C1075: "{": не найдена несоответствующая лексема
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(77,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(80,31): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(81,35): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(99,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(133,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(135,31): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(197,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(206,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(219,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(225,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(226,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(279,41): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(290,41): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(302,41): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(376,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(384,27): warning C4018: <: несоответствие типов со знаком и без знака
+  Project DATA BASE.vcxproj -> D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Debug\Project DATA BASE.exe

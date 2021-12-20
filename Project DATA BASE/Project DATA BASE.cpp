@@ -78,7 +78,7 @@ public:
         cout << endl;
         if (tableBase.size() > 0) {
             for (int i = 0; i < tableBase[0].columnData.size(); i++) {
-                for (int j = 0; j < tableBase.size(); j++) cout << tableBase[j].columnData[i] << " ";
+                for (int j = 0; j < columnsNames.size(); j++) cout << tableBase[j].columnData[i] << " ";
                 cout << endl;
             }
         }
@@ -87,19 +87,20 @@ public:
 
     /*
     * 1) Добавить строку
-    * 2) Добавить столбец
+    * 2) Добавить столбец - не вышло, непонятно почему ошибка
     * 3) Удалить строку
     * 4) Удалить столбец
     * 5) Изменить ячейку данных
     */
+
+
     //1) Добавить строку
     void addRow(vector<string> data) {
         for (int i = 0; i < data.size(); i++) tableBase[i].columnData.push_back(data[i]);
         //cout << "1000000000000000";
-    
+    }
 
     /*
-
     //2) Добавить столбец
     void addColumn(string columnName) {
         vector<string> data;
@@ -126,8 +127,19 @@ public:
         cout << "1000000000000000";
     }
     //5) Изменить ячейку данных
-    void changeData() {
-        cout << "1000000000000000";
+    void changeData(string newDataValue, string rIndex = "", string cIndex = "") {
+        int rowIndex = stoi(rIndex)-1, columnIndex = stoi(cIndex)-1;
+
+        for (int i = 0; i < tableBase[0].columnData.size(); i++) {
+
+            for (int j = 0; j < columnsNames.size(); j++) {
+                if (i == rowIndex && j == columnIndex) {
+                    tableBase[j].columnData[i] = newDataValue;
+                    break;
+                }
+                //cout << tableBase[j].columnData[i] << " ";
+            }
+        }
     }
 
     // конструктор
@@ -211,7 +223,7 @@ void updateTheTableFile(Table* tableN) {
     //cout << endl << (*tableN).columnsNames.size() << endl;
 
     for (int i = 0; i < (*tableN).tableBase[0].columnData.size(); i++) {
-        for (int j = 0; j < (*tableN).tableBase.size(); j++) {
+        for (int j = 0; j < (*tableN).columnsNames.size(); j++) {
             //cout << endl << i << "\t" << j << "\t" << (*tableN).tableBase[j].columnData[i];
             fout << (*tableN).tableBase[j].columnData[i] << " ";
         }
@@ -255,7 +267,7 @@ void performRequest(Table* workingTable, string request) {
         if (workingTable == &students) {
             //id Last_Name First_Name Age Class
             string id = to_string(idsForStudents), lastName = "", firstName = "", age = "", clas = "";
-            idsForStudents++;
+            idsForStudents += 1;
             cout << "Enter data separated by a space in format : Last_Name, First_Name, Age, Class.\n"; 
             //for (int i = 0; i < (*workingTable).columnsNames.size(); i++) cout << (*workingTable).columnsNames[i] << " ";
             cin >> lastName >> firstName >> age >> clas;
@@ -269,7 +281,7 @@ void performRequest(Table* workingTable, string request) {
         else if (workingTable == &courses) {
             // id Course_name
             string id = to_string(idsForCourses), courseName = "";
-            idsForCourses++;
+            idsForCourses += 1;                                           // возможно пробдема с id до того момента пока не сделаю бесконечный запрос
             cout << "Enter course's name.\n";  
             //for (int i = 0; i < (*workingTable).columnsNames.size(); i++) cout << (*workingTable).columnsNames[i] << " ";
             cin >> courseName;
@@ -296,20 +308,15 @@ void performRequest(Table* workingTable, string request) {
     }
 
     /*
-    
     // 2) Добавить столбец 
     else if (request == "2") {
         cout << "\nEnter column name.\n";
         string columnName;
         cin >> columnName;
-
         cout << (*workingTable).tableBase[0].columnData.size() << "\t" << (*workingTable).tableBase[(*workingTable).tableBase.size()-1].columnData.size() << endl;
         //(*workingTable).showTheTable();
-
         (*workingTable).addColumn(columnName);
-
         cout << (*workingTable).tableBase[0].columnData.size() << "\t" << (*workingTable).tableBase[(*workingTable).tableBase.size() - 1].columnData.size() << endl;
-
         (*workingTable).showTheTable();
         updateTheTableFile(workingTable);
         (*workingTable).showTheTable();
@@ -324,9 +331,16 @@ void performRequest(Table* workingTable, string request) {
     else if (request == "4") {
         (*workingTable).deleteColumn();
     }
-    // 5) Изменить ячейку данных
+    // 5) Изменить ячейку данныx - DONE
     else if (request == "5") {
-        (*workingTable).changeData();
+        cout << "\nEnter the row's and column's number of the box you want to change separated by a space (for example: 0 0).\n";
+        string rowIndex = "", columnIndex = "";
+        cin >> rowIndex >> columnIndex;
+        cout << "\nEnter new data value.\n";
+        string newDataValue = "";
+        cin >> newDataValue;
+        (*workingTable).changeData(newDataValue, rowIndex, columnIndex);
+        updateTheTableFile(workingTable);
     }
 }
 
@@ -347,7 +361,7 @@ void offerOptionsForTable(string tableN = "") {
     * 5) Изменить ячейку данных
     */
     cout << "\n1) Add the row."; // Добавить строку
-    cout << "\n2) Add the column."; // Добавить столбец
+    //cout << "\n2) Add the column."; // Добавить столбец
     cout << "\n3) Delete the row."; // Удалить строку
     cout << "\n4) Delete the column."; // Удалить столбец
     cout << "\n5) Change the data.\n"; // Изменить ячейку данных

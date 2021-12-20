@@ -1,6 +1,6 @@
 Name: Students
 Data:
 id Last_Name First_Name Age Class 
-0 Dolzhenko Anastasia 16 11
-1 Petrov Petr 3 0
-2 Ivanov Ivan 12 6
+0 Dolzhenko Anastasia 16 11 
+1 Petrov Petr 20 0 
+2 Ivanov Ivan 12 6 

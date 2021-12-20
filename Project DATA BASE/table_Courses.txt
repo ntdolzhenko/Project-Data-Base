@@ -1,6 +1,5 @@
 Name: Courses
 Data:
-id Course_name
-0 Math
-1 Literature
-2 Chemistry
+id Course_name 
+0 History 
+1 Math
