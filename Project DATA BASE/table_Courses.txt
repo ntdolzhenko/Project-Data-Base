@@ -1,2 +1,7 @@
 Name: Courses
 Data:
+id Name
+0 Math
+1 Physics
+2 Biology
+3 Literature

@@ -1,1 +1,8 @@
-﻿  Project DATA BASE.vcxproj -> D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Debug\Project DATA BASE.exe
+﻿  Project DATA BASE.cpp
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(95,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(98,31): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(99,34): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(211,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(223,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Project DATA BASE.cpp(225): warning C4715: readTheTables: значение возвращается не при всех путях выполнения
+  Project DATA BASE.vcxproj -> D:\Nastya\учёба 11 класс\Информатика\Project-Data-Base\Project DATA BASE\Debug\Project DATA BASE.exe

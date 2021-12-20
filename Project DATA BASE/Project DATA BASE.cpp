@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// СТРУКТУРЫ: 
+// КЛАССЫ
 // 1. Столбец
 //     Переменные:
 //         название
@@ -16,9 +16,7 @@ using namespace std;
 //         ссылка на другой похожий столбец в другой таблице
 //     (Методы)
 
-
-// КЛАССЫ:
-// 1. Таблица 
+// 2. Таблица 
 //     Переменные:
 //         путь до файла с таблицей
 //         название таблицы
@@ -33,7 +31,7 @@ using namespace std;
 //         изменить (поля - 5, данные - 6)
 //         добавить столбец - 7
 //         удалить столбец - 8
-//         показать таблицу - 9
+//         показать таблицу - 9  !!!
 //         показать средний балл ученика - 10
 //     Методы: (private)
 // ФУНКЦИИ:
@@ -43,7 +41,7 @@ using namespace std;
     // Прекращение работы программы
 
 
-//////////////////////////КЛАССЫ///////////////////////////////////
+//////////////////////////CLASSES///////////////////////////////////
 
 // СТОЛБЕЦ
 class Column {
@@ -89,27 +87,17 @@ public:
     void deleteTheColumn() {
         cout << "1000000";
     };
+
     void showTheTable() {
-        cout << "Name: " << tableName << endl;
-
-        //for (int i = 0; i < columnsNames.size(); i++) {
-         //   for (int j = 0; j < tableBase[0].columnData.size(); j++) cout << tableBase[i].columnData[j] << " ";
-          //  cout << endl;
-        //}
-
+        cout << endl << "Name: " << tableName << endl;
+        for (int i = 0; i < columnsNames.size(); i++) cout << columnsNames[i] << " ";
+        cout << endl;
         if (tableBase.size() != 0) {
-//            for (int i = 0; i < tableBase[0].columnData.size(); i++) {    // вылетает ошибка
-//               for (int j = 0; j < columnsNames.size(); j++) cout << tableBase[j].columnData[i] << " ";
-//                cout << endl;
-//            }
-            cout << "tableBase.size()    " << tableBase.size() << endl;
-            cout << "tableBase[0].columnData.size()            " << tableBase[0].columnData.size()<< endl;
-            for (int i = 0; i < tableBase[0].columnData.size(); i++) cout << tableBase[0].columnData[i] << " ";
-            //cout << "tableBase[0]    " << tableBase.size() << endl;
-
-            cout << "SUCCESSFULY";
+            for (int i = 0; i < tableBase[0].columnData.size(); i++) { 
+               for (int j = 0; j < columnsNames.size(); j++) cout << tableBase[j].columnData[i] << " "; 
+                cout << endl;
+            }
         }
-
     };
 
     void getGPA(string studentID, string subjectID) {
@@ -129,20 +117,19 @@ public:
     }
 
     // конструктор
-    Table(string pathToFile = "", string tableName = "", vector <string> columnsNames = {}, vector <Column> tableBase = { {} }) {         // конструктор
+    Table(string pathToFile = "", string tableName = "", vector <string> columnsNames = {}, vector <Column> tableBase = { {} }) {
         this -> pathToFile = pathToFile;
         this -> tableName = tableName;
         this -> columnsNames = columnsNames;
         this -> tableBase = tableBase;
     } 
 
-
     // void changeColumnName(){};
     //void
 
 };
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////GLOBAL VARIABLES/////////////////////////////////////
 
 Table students = Table("table_Students.txt", "Students");
 Table courses = Table("table_Courses.txt", "Courses");
@@ -153,7 +140,7 @@ long long idsForStudents = 0;
 long long idsForCourses = 0;
 long long idsForGrades = 0;
 
-//////////////////////////////ФУНКЦИИ////////////////////////////////////
+//////////////////////////////FUNCTIONS////////////////////////////////////
 
 void getRequest() {
     /* 
@@ -188,17 +175,11 @@ void splitTheString(vector<string>* list, string line , char separator = ' ') { 
         }
         line.erase(0, 1);
     }
+    if(s.size() > 0) (*list).push_back(s);
 }
 
 bool readTheTables(Table* tableN) {
-/*
-* Name: Students
-* Data:
-* id    Last_Name    First_Name    Age    Class
-* 0      Dolzhenko    Anastasia     16       11
-* 1        Ivanov       Ivan        13       6       между данными везде один пробел(табуляция)
-* 2        Petrov       Petr        16       11
-*/
+
     ifstream fin;
     fin.open((*tableN).pathToFile);
 
@@ -209,16 +190,13 @@ bool readTheTables(Table* tableN) {
     }
 
     string line;
-    
-    fin >> line;
-    fin >> line;
-    fin >> line;
-    fin >> line;
-
-    //if (line == "Data:") fin >> line;
+    getline(fin, line);
+    getline(fin, line);
+    getline(fin, line);
 
     // здесь мы считали названия столбцов, их нужно записать в названия столбцов таблицы и в названия каждому столбцу
     splitTheString(&((*tableN).columnsNames), line, ' ');
+
     // создаем столбцы
     for (int i = 0; i < ((*tableN).columnsNames).size(); i++) {
         Column col = Column((*tableN).columnsNames[i]);
@@ -227,11 +205,9 @@ bool readTheTables(Table* tableN) {
 
     // считываем и записываем данные
     while (!fin.eof()) {
-        //fin >> line;
         getline(fin, line);
         vector<string> dataGotten = {};
         splitTheString(&dataGotten, line, ' ');
-        //for (int i = 0; i < dataGotten.size(); i++) cout << endl << dataGotten[i];
         for (int i = 0; i < dataGotten.size(); i++) (*tableN).tableBase[i].columnData.push_back(dataGotten[i]);
     }
 }
@@ -252,7 +228,7 @@ void offerOptionsForTable(string tableN = "") {
     cout << "\n3) Change the data."; // Изменить данные
     cout << "\n4) Add the column."; // Добавить столбец
     cout << "\n5) Delete the column.\n"; // Удалить столбец
-    //cout << "\n6) Show the table."; // Показать таблицу.
+    //cout << "\n6) Show all tables."; // Показать таблицу.
 
 
     /* ВРЕМЕННО ЗАКОММЕНТИРОВАНО
@@ -269,15 +245,17 @@ void offerOptionsForTable(string tableN = "") {
 
 void offerOptions() {
 
-    cout << "\nPlease, choose what you would like to to do and input the number of chosen option (for example: 1).\n";
+    cout << "\nPlease, choose what you would like to to do and type the number of chosen option (for example: 1).\n";
     cout << "\n1) Show table."; // Показать таблицу
-    cout << "\n2) Get the student's GPA."; // получить средний балл ученика
-    cout << "\n3) Change the table.\n"; // Изменить таблицу
+    cout << "\n2) Show all tables."; // Показать все таблицы
+    cout << "\n3) Get the student's GPA."; // получить средний балл ученика
+    cout << "\n4) Change the table.\n"; // Изменить таблицу
 
     string request = "";
     cin >> request;
 
-    if (request == "1") { // Показать таблицу
+    // Показать таблицу - DONE
+    if (request == "1") {
         cout << "\nPlease, enter the table name: Students, Courses or Grades.\n";
         string tableN = "";
         cin >> tableN;
@@ -286,14 +264,27 @@ void offerOptions() {
         else if (tableN == "Grades") grades.showTheTable();
 
     }
-    else if (request == "2") { // получить средний балл ученика
+    // Показать все таблицы - DONE
+    else if (request == "2") {
+        students.showTheTable();
+        cout << endl;
+        courses.showTheTable();
+        cout << endl;
+        grades.showTheTable();
+        cout << endl;
+
+        // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
+    }
+    // получить средний балл ученика
+    else if (request == "3") {
         cout << "\nPlease, enter student's ID and subject's ID separated by a space.\n";
         string studentID = "", subjectID = "";
         cin >> studentID >> subjectID;
         grades.getGPA(studentID, subjectID);
        // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
     }
-    else if (request == "3") {   // Изменить таблицу
+    // Изменить таблицу
+    else if (request == "4") { 
         cout << "\nPlease, enter the table's name you would like to change:  Students, Courses or Grades.\n";
         string tableN = "";
         cin >> tableN;
@@ -304,20 +295,19 @@ void offerOptions() {
     }
 }
 
-void greeting() {
-    //setlocale(LC_ALL, "Russian");
-    //cout << "Добро пожаловать в Базу Данных. Пожалуйста, выберите действие, которое Вы хотели бы выполнить и введите номер выбранного действия.";
-    //cout << "Welcome to the Data Base.\nPlease, opt for the option you would like to perform and input the number of chosen option (for example: 1).\n";
-    cout << "Welcome to the Data Base.\n";
+void getTables() {  // считываем таблицы в самом начале
+    readTheTables(&students);
+    readTheTables(&courses);
+    readTheTables(&grades);
 }
 
+void setTables(){} // записываем таблицы обратно в файл в самом конце
 void startOfProg() {
 
     // считываем таблицы из файлов
-    readTheTables(&students);
-    cout << "CHECKING     " << students.tableBase.size() << endl;
+    getTables();
     // приветствие
-    greeting();
+    cout << "Welcome to the Data Base.\n";
     // предлагаем выбор опций
     offerOptions();
 
@@ -328,8 +318,7 @@ void startOfProg() {
 
 int main()
 {
-
-    startOfProg();
+    startOfProg(); // сделать бесконечный ввод команд
 
     return 0;
 }
