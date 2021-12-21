@@ -63,8 +63,6 @@ public:
 // ТАБЛИЦА
 class Table{
 
-private:
-//
 public:
     string pathToFile;
     string tableName;
@@ -73,7 +71,7 @@ public:
 
     // Показать таблицу
     void showTheTable() {    // чтобы нормально выводилось погуглить setw в iomanip
-        cout << endl << "Name: " << tableName << endl;
+        cout << "Name: " << tableName << "\nData:" << endl;
         for (int i = 0; i < columnsNames.size(); i++) cout << columnsNames[i] << " ";
         cout << endl;
         if (tableBase.size() > 0) {
@@ -85,19 +83,9 @@ public:
         else cout << "\nThe table is empty.\n";
     };
 
-    /*
-    * 1) Добавить строку
-    * 2) Добавить столбец - не вышло, непонятно почему ошибка
-    * 3) Удалить строку
-    * 4) Удалить столбец
-    * 5) Изменить ячейку данных
-    */
-
-
     //1) Добавить строку
     void addRow(vector<string> data) {
         for (int i = 0; i < data.size(); i++) tableBase[i].columnData.push_back(data[i]);
-        //cout << "1000000000000000";
     }
 
     /*
@@ -119,8 +107,12 @@ public:
     */
 
     //3) Удалить строку
-    void deleteRow(){
-        cout << "1000000000000000";
+    void deleteRow(int rowIndex){
+        for (int i = 0; i < columnsNames.size(); i++) {
+            auto begin = tableBase[i].columnData.cbegin(); 
+            auto end = tableBase[i].columnData.cend();
+            tableBase[i].columnData.erase(begin + rowIndex, begin + rowIndex + 1);
+        }
     }
     //4) Удалить столбец
     void deleteColumn() {
@@ -151,18 +143,16 @@ public:
     } 
 };
 
+
 ////////////////////////////////////GLOBAL VARIABLES/////////////////////////////////////
 
 Table students = Table("table_Students.txt", "Students");
 Table courses = Table("table_Courses.txt", "Courses");
 Table grades = Table("table_Grades.txt", "Grades");
 
-int idsForStudents = 0;
-int idsForCourses = 0;
-int idsForGrades = 0;
+int idsForStudents, idsForCourses, idsForGrades;
 
 //////////////////////////////FUNCTIONS////////////////////////////////////
-
 
 void splitTheString(vector<string>* list, string line , char separator = ' ') { // функция split по char для string
     string s = "";
@@ -176,6 +166,46 @@ void splitTheString(vector<string>* list, string line , char separator = ' ') { 
         line.erase(0, 1);
     }
     if(s.size() > 0) (*list).push_back(s);
+}
+
+void readIDs() {
+    ifstream fin;
+    string line;
+
+    fin.open("id_for_students.txt");
+    getline(fin, line);
+    idsForStudents = stoi(line);
+    fin.close();
+
+    //ifstream fin;
+    fin.open("id_for_courses.txt");
+    getline(fin, line);
+    idsForCourses = stoi(line);
+    fin.close();
+
+    //ifstream fin;
+    fin.open("id_for_grades.txt");
+    getline(fin, line);
+    idsForGrades = stoi(line);
+    fin.close();
+
+    //cout << endl << idsForStudents << "\t" << idsForCourses << "\t" << idsForGrades << endl;
+}
+
+void updateIDs() {
+    //cout << endl << idsForStudents << "\t" << idsForCourses << "\t" << idsForGrades << endl;
+    ofstream fout;
+    fout.open("id_for_students.txt");
+    fout << idsForStudents;
+    fout.close();
+
+    fout.open("id_for_courses.txt");
+    fout << idsForCourses;
+    fout.close();
+
+    fout.open("id_for_grades.txt");
+    fout << idsForGrades;
+    fout.close();
 }
 
 void readTheTables(Table* tableN) {
@@ -235,22 +265,13 @@ void updateTheTableFile(Table* tableN) {
 
 void performRequest(Table* workingTable, string request) {
 
-    /*
-    if (tableN == "Students") workingTable = &students;
-    else if (tableN == "Courses") workingTable = &courses;
-    else if (tableN == "Grades") workingTable = &grades;
-    */
-
     // 1) Добавить строку (студента, оценку, столбец) - DONE
     if (request == "1") {
         vector<string> data;
-        // пока непонятно как вводить что то кроме данных базовых столбцов
         if (workingTable == &students) {
-            //id Last_Name First_Name Age Class
-            string id = to_string(idsForStudents), lastName = "", firstName = "", age = "", clas = "";
+            string id = to_string(idsForStudents + 1), lastName = "", firstName = "", age = "", clas = "";
             idsForStudents += 1;
             cout << "Enter data separated by a space in format : Last_Name, First_Name, Age, Class.\n"; 
-            //for (int i = 0; i < (*workingTable).columnsNames.size(); i++) cout << (*workingTable).columnsNames[i] << " ";
             cin >> lastName >> firstName >> age >> clas;
             data.push_back(id);
             data.push_back(lastName);
@@ -260,19 +281,16 @@ void performRequest(Table* workingTable, string request) {
             for (int i = data.size(); i < (*workingTable).columnsNames.size(); i++) data.push_back("-");
         }
         else if (workingTable == &courses) {
-            // id Course_name
-            string id = to_string(idsForCourses), courseName = "";
-            idsForCourses += 1;                                           // возможно пробдема с id до того момента пока не сделаю бесконечный запрос
+            string id = to_string(idsForCourses + 1), courseName = "";
+            idsForCourses += 1;                                           
             cout << "Enter course's name.\n";  
-            //for (int i = 0; i < (*workingTable).columnsNames.size(); i++) cout << (*workingTable).columnsNames[i] << " ";
             cin >> courseName;
             data.push_back(id);
             data.push_back(courseName);
             for (int i = data.size(); i < (*workingTable).columnsNames.size(); i++) data.push_back("-");
         }
         else if (workingTable == &grades) {
-            //id id_Student id_Course Grade
-            string id = to_string(idsForGrades), idStudent = "", idCourse = "", grade = "";
+            string id = to_string(idsForGrades + 1), idStudent = "", idCourse = "", grade = "";
             idsForGrades++;
             cout << "Enter data separated by a space in format : id_Student, id_Course, Grade.\n";   
             cin >> idStudent >> idCourse >> grade;
@@ -285,7 +303,6 @@ void performRequest(Table* workingTable, string request) {
 
         (*workingTable).addRow(data);
         updateTheTableFile(workingTable);
-        //(*workingTable).showTheTable();
     }
 
     /*
@@ -304,17 +321,45 @@ void performRequest(Table* workingTable, string request) {
     }
     */
 
-    // 3) Удалить строку
-    else if (request == "3") {
-        (*workingTable).deleteRow();
+    // 3) Удалить строку - DONE
+    else if (request == "2") {
+        cout << "\nEnter the row's index(!) you would like to delete.\n";
+        string ind;
+        cin >> ind;
+        int rowIndex = stoi(ind);
+        
+        if (workingTable == &students) {
+            string idOfSudent = (*workingTable).tableBase[0].columnData[rowIndex];
+            vector<int> indexsToDelete;
+
+            for (int i = 0; i < grades.tableBase[1].columnData.size(); i++) {
+                if (grades.tableBase[1].columnData[i] == idOfSudent) indexsToDelete.push_back(i);
+            }
+            for (int i = 0; i < indexsToDelete.size(); i++) grades.deleteRow(indexsToDelete[i] - 1*i);
+        }
+        else if (workingTable == &courses) {
+            string idOfCourse = (*workingTable).tableBase[0].columnData[rowIndex];
+            vector<int> indexsToDelete;
+
+            for (int i = 0; i < grades.tableBase[2].columnData.size(); i++) {
+                if (grades.tableBase[2].columnData[i] == idOfCourse) indexsToDelete.push_back(i);
+            }
+            for (int i = 0; i < indexsToDelete.size(); i++) grades.deleteRow(indexsToDelete[i] - 1 * i);
+        }
+        (*workingTable).deleteRow(rowIndex);
+        updateTheTableFile(workingTable);
     }
+
+    /*
     // 4) Удалить столбец
     else if (request == "4") {
         (*workingTable).deleteColumn();
     }
+    */
+
     // 5) Изменить ячейку данныx - DONE
-    else if (request == "5") {
-        cout << "\nEnter the row's and column's number of the box you want to change separated by a space (for example: 0 0).\n";
+    else if (request == "3") {
+        cout << "\nEnter the row's and column's number(!) of the box you want to change separated by a space (for example: 0 0).\n";
         string rowIndex = "", columnIndex = "";
         cin >> rowIndex >> columnIndex;
         cout << "\nEnter new data value.\n";
@@ -332,7 +377,7 @@ void offerOptionsForTable(string tableN = "") {
     else if (tableN == "Courses") workingTable = &courses;
     else if (tableN == "Grades") workingTable = &grades;
     
-    cout << "\nPlease, opt for the command you would like to perform and input the number of chosen option (for example: 1).\n";
+    cout << "\nPlease, opt for the command you would like to perform and input the number of chosen option (for example: 1).";
     /*
     * 1) Добавить строку
     * 2) Добавить столбец
@@ -340,11 +385,11 @@ void offerOptionsForTable(string tableN = "") {
     * 4) Удалить столбец
     * 5) Изменить ячейку данных
     */
-    cout << "\n1) Add the row."; // Добавить строку
+    cout << "\n1) Add row."; // Добавить строку
     //cout << "\n2) Add the column."; // Добавить столбец
-    cout << "\n3) Delete the row."; // Удалить строку
-    cout << "\n4) Delete the column."; // Удалить столбец
-    cout << "\n5) Change the data.\n"; // Изменить ячейку данных
+    cout << "\n2) Delete row."; // Удалить строку
+    //cout << "\n4) Delete the column."; // Удалить столбец
+    cout << "\n3) Change data.\n"; // Изменить ячейку данных
 
     string request = "";
     cin >> request;
@@ -377,11 +422,11 @@ void getGPA(string studentID, string coursetID) { // Добавить прове
 
 bool offerOptions() {
 
-    cout << "\nPlease, choose what you would like to to do and type the number of chosen option (for example: 1).\n";
+    cout << "\nPlease, choose what you would like to to do and type the number of chosen option (for example: 1).";
     cout << "\n1) Show table."; // Показать таблицу
     cout << "\n2) Show all tables."; // Показать все таблицы
-    cout << "\n3) Get the student's GPA."; // получить средний балл ученика
-    cout << "\n4) Change the table."; // Изменить таблицу
+    cout << "\n3) Get student's GPA."; // получить средний балл ученика
+    cout << "\n4) Change table."; // Изменить таблицу
     cout << "\n5) Finish work and exit.\n"; // Завершить работу программы
 
     string request = "";
@@ -429,16 +474,11 @@ bool offerOptions() {
         //        else if (tableN == "Grades") grades.showTheTable();
     }
     else if (request == "5") {
+        updateIDs();
         cout << endl << "Goodbye!..................\n";
         return false;
     }
 }
-
-/*ヾ(-_- )ゞ
-* [¬º-°]¬
-* 👋🏻
-* (⊃｡•́‿•̀｡)⊃
-*/
 
 void getRequest() {
     bool request = true;
@@ -451,12 +491,12 @@ void getTables() {  // считываем таблицы в самом нача�
     readTheTables(&grades);
 }
 
-//void setTables(){} // записываем таблицы обратно в файл в самом конце
-
-void startOfProg() {
+void runProg() {
 
     // считываем таблицы из файлов
     getTables();
+    // считываем id-шники
+    readIDs();
     // приветствие
     cout << "Welcome to the Data Base.\n";
     // предлагаем выбор опций
@@ -465,10 +505,8 @@ void startOfProg() {
 
 //////////////////////////////////////////////////////////////////
 
-
 int main()
 {
-    startOfProg(); // сделать бесконечный ввод команд
-
+    runProg(); // сделать бесконечный ввод команд
     return 0;
 }

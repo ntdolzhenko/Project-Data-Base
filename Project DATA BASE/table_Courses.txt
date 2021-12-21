@@ -3,5 +3,7 @@ Data:
 id Course_name 
 0 History 
 1 Math 
-0 Literature 
-1 test 
+2 Literature 
+3 Music 
+4 English 
+5 Science 
