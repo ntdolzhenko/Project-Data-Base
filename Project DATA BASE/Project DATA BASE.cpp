@@ -1,50 +1,13 @@
 ﻿#include <iostream>
 #include <vector>
+#include <cmath>
 #include <string>
 #include <fstream>
 #include <iomanip>
-//#include "Table.Cl.h"
 
 using namespace std;
 
-// КЛАССЫ
-// 1. Столбец
-//     Переменные:
-//         название
-//         (длина столбца)
-//         размер поля
-//         вектор с данными
-//         ссылка на другой похожий столбец в другой таблице
-//     (Методы)
-
-// 2. Таблица 
-//     Переменные:
-//         путь до файла с таблицей
-//         название таблицы
-//         количество строк
-//         список с названиями столбцов таблицы
-//         вектор со столбцами
-
-
-//     Методы: (public)
-//         создать (поля - 1, данные - 2)
-//         удалить (поля - 3, данные - 6)
-//         изменить (поля - 5, данные - 6)
-//         добавить столбец - 7
-//         удалить столбец - 8
-//         показать таблицу - 9  !!!
-//         показать средний балл ученика - 10
-//     Методы: (private)
-// ФУНКЦИИ:
-    // Запустить программу
-    // Получить request
-    // Запросить ввод задания и его выполнение
-    // Прекращение работы программы
-
-
-//////////////////////////CLASSES///////////////////////////////////
-
-// СТОЛБЕЦ
+// Column
 class Column {
 public:
     string columnName;
@@ -54,14 +17,14 @@ public:
 
     // конструктор
     Column(string columnName = "", vector <string> columnData = {}) {
-        this -> columnName = columnName;
-        this -> columnData = columnData;
+        this->columnName = columnName;
+        this->columnData = columnData;
     }
 
 };
 
-// ТАБЛИЦА
-class Table{
+// Table
+class Table {
 
 public:
     string pathToFile;
@@ -70,7 +33,9 @@ public:
     vector <Column> tableBase;
 
     // Показать таблицу
-    void showTheTable() {    // чтобы нормально выводилось погуглить setw в iomanip
+    void showTheTable() {
+
+        // чтобы нормально выводилось погуглить setw в iomanip
         cout << "Name: " << tableName << "\nData:" << endl;
         for (int i = 0; i < columnsNames.size(); i++) cout << columnsNames[i] << " ";
         cout << endl;
@@ -107,9 +72,9 @@ public:
     */
 
     //3) Удалить строку
-    void deleteRow(int rowIndex){
+    void deleteRow(int rowIndex) {
         for (int i = 0; i < columnsNames.size(); i++) {
-            auto begin = tableBase[i].columnData.cbegin(); 
+            auto begin = tableBase[i].columnData.cbegin();
             tableBase[i].columnData.erase(begin + rowIndex, begin + rowIndex + 1);
         }
     }
@@ -119,7 +84,7 @@ public:
     }
     //5) Изменить ячейку данных
     void changeData(string newDataValue, string rIndex = "", string cIndex = "") {
-        int rowIndex = stoi(rIndex)-1, columnIndex = stoi(cIndex)-1;
+        int rowIndex = stoi(rIndex) - 1, columnIndex = stoi(cIndex) - 1;
 
         for (int i = 0; i < tableBase[0].columnData.size(); i++) {
 
@@ -134,14 +99,13 @@ public:
     }
 
     // конструктор
-    Table(string pathToFile = "", string tableName = "", vector <string> columnsNames = {}, vector <Column> tableBase = { {} }) {
-        this -> pathToFile = pathToFile;
-        this -> tableName = tableName;
-        this -> columnsNames = columnsNames;
-        this -> tableBase = tableBase;
-    } 
+    Table(string pathToFile = "", string tableName = "", vector <string> columnsNames = {}) {
+        this->pathToFile = pathToFile;
+        this->tableName = tableName;
+        this->columnsNames = columnsNames;
+        //this -> tableBase = tableBase;
+    }
 };
-
 
 ////////////////////////////////////GLOBAL VARIABLES/////////////////////////////////////
 
@@ -223,9 +187,12 @@ void readTheTables(Table* tableN) {
     getline(fin, line);
     // здесь мы считали названия столбцов, их нужно записать в названия столбцов таблицы и в названия каждому столбцу
     splitTheString(&((*tableN).columnsNames), line, ' ');
+    //cout << endl;
+    //for (int i = 0; i < (*tableN).columnsNames.size(); i++) cout << "/" << (*tableN).columnsNames[i] << "/";
     // создаем столбцы
     for (int i = 0; i < ((*tableN).columnsNames).size(); i++) {
         Column col = Column((*tableN).columnsNames[i]);
+        //cout << "/" << i << "/";
         (*tableN).tableBase.push_back(col);
     }
     // считываем и записываем данные
@@ -257,7 +224,7 @@ void updateTheTableFile(Table* tableN) {
             //cout << endl << i << "\t" << j << "\t" << (*tableN).tableBase[j].columnData[i];
             fout << (*tableN).tableBase[j].columnData[i] << " ";
         }
-        fout << endl;
+        if(i != (*tableN).tableBase[0].columnData.size() - 1) fout << endl;
     }
 
     fout.close();
@@ -282,8 +249,6 @@ float getGPA(string studentID, string coursetID, int removedGrade = 0, int remov
         }
         float GPA = (sumGrades - removedGrade) / (countGrades - removedCount);
         return GPA;
-        //cout << endl << setprecision(3) << GPA << endl;
-
     }
     //else  cout << "\nThe table is empty.\n";
 }
@@ -312,7 +277,7 @@ void performRequest(Table* workingTable, string request) {
             gpa.addRow(dataForGPA);
 
         }
-        else if (workingTable == &courses) { // gpa Не работает (что то с перезаписью файла)
+        else if (workingTable == &courses) { // gpa  работает 
             string id = to_string(idsForCourses + 1), courseName = "";
             idsForCourses += 1;                                           
             cout << "Enter course's name.\n";  
@@ -321,12 +286,17 @@ void performRequest(Table* workingTable, string request) {
             data.push_back(courseName);
             for (int i = data.size(); i < (*workingTable).columnsNames.size(); i++) data.push_back("-");
 
+            // добавить в названия колонок gpa название предмета
             gpa.columnsNames.push_back(courseName);
-            vector<string> dataForGPA(gpa.tableBase[0].columnData.size(), "0");
+            // создаем вектор с нулями
+            vector<string> dataForGPA(gpa.tableBase[0].columnData.size());
+            for (int i = 0; i < dataForGPA.size(); i++) dataForGPA[i] = "0";
+            // создаем колонку с вектором
             Column col = Column(courseName, dataForGPA);
             gpa.tableBase.push_back(col);
+
         }
-        else if (workingTable == &grades) {
+        else if (workingTable == &grades) { // gpa работает
             string id = to_string(idsForGrades + 1), idStudent = "", idCourse = "", grade = "";
             idsForGrades++;
             cout << "Enter data separated by a space in format : id_Student, id_Course, Grade.\n";   
@@ -336,9 +306,10 @@ void performRequest(Table* workingTable, string request) {
             data.push_back(idCourse);
             data.push_back(grade);
             for (int i = data.size(); i < (*workingTable).columnsNames.size(); i++) data.push_back("-");
-            // gpa Не работает
-            // нужно пересчитать gpa
-            //получили оценку, которая удалится - grade
+
+            // Пересчитываем gpa
+            float newGPA = getGPA(idStudent, idCourse, -stoi(grade), -1);
+
             //получили имя студента у которого удалится оценка 
             string studentFullName[2];
             string studentName;
@@ -349,22 +320,22 @@ void performRequest(Table* workingTable, string request) {
                     break;
                 }
             }
-            studentName = studentFullName[1] + "_" + studentFullName[0][0] + ".";
+            studentName = studentFullName[0] + "_" + studentFullName[1][0] + ".";
 
             // ищем предмет и потом его название
-            string courseName;
+            string courseName = "";
             for (int i = 0; i < courses.tableBase[1].columnData.size(); i++) {
-                if (courses.tableBase[1].columnData[i] == idCourse) {
+                if (courses.tableBase[0].columnData[i] == idCourse) {
                     courseName = courses.tableBase[1].columnData[i];
                     break;
                 }
             }
-            // нужно пересчитать средний балл
+
+            // перезаписываем средний балл
             for (int i = 0; i < gpa.tableBase[0].columnData.size(); i++) {
                 for (int j = 0; j < gpa.columnsNames.size(); j++) {
                     if (gpa.tableBase[0].columnData[i] == studentName && gpa.columnsNames[j] == courseName) {
-                        int newGPA = getGPA(idStudent, idCourse, -stoi(grade), -1);
-                        gpa.tableBase[j].columnData[i] = to_string(newGPA);
+                        gpa.tableBase[j].columnData[i] = to_string(ceil(newGPA * 100) / 100).substr(0,4);
                         break;
                     }
                 }
@@ -399,7 +370,7 @@ void performRequest(Table* workingTable, string request) {
         cin >> ind;
         int rowIndex = stoi(ind);
         
-        if (workingTable == &students) {        // GPA не работает
+        if (workingTable == &students) {        // GPA работает
             string idOfSudent = (*workingTable).tableBase[0].columnData[rowIndex];
             vector<int> indexsToDelete;
 
@@ -408,10 +379,10 @@ void performRequest(Table* workingTable, string request) {
             }
             for (int i = 0; i < indexsToDelete.size(); i++) grades.deleteRow(indexsToDelete[i] - 1*i);
 
-            // находим id студента
+
             string studentID = (*workingTable).tableBase[0].columnData[rowIndex];
             string studentName = (*workingTable).tableBase[1].columnData[rowIndex] + "_" + (*workingTable).tableBase[2].columnData[rowIndex][0] + ".";
-            //удаляем оценки студента и его имя из таблицы gpa
+
             for (int i = 0; i < gpa.tableBase[0].columnData.size(); i++) {
                 if (gpa.tableBase[0].columnData[i] == studentName) {
                     for (int j = 0; j < gpa.columnsNames.size(); j++) {
@@ -448,9 +419,10 @@ void performRequest(Table* workingTable, string request) {
             auto begin_1 = gpa.tableBase.cbegin();
             gpa.tableBase.erase(begin_1 + courseIndex, begin_1 + courseIndex + 1);
         }
-        else if (workingTable == &grades) {  // GPA не работает
+        else if (workingTable == &grades) {  // GPA работает
             //получили оценку, которая удалится
             string grade = (*workingTable).tableBase[3].columnData[rowIndex];
+
             //получили имя студента у которого удалится оценка 
             string studentID = (*workingTable).tableBase[1].columnData[rowIndex];
             string studentFullName[2];
@@ -462,23 +434,27 @@ void performRequest(Table* workingTable, string request) {
                     break;
                 }
             }
-            studentName = studentFullName[1] + "_" + studentFullName[0][0] + ".";
+            studentName = studentFullName[0] + "_" + studentFullName[1][0] + ".";
 
             // ищем предмет и потом его название
             string courseID = (*workingTable).tableBase[2].columnData[rowIndex];
-            string courseName;
+            string courseName = "";
+
             for (int i = 0; i < courses.tableBase[1].columnData.size(); i++) {
-                if (courses.tableBase[1].columnData[i] == courseID) {
+                if (courses.tableBase[0].columnData[i] == courseID) {
                     courseName = courses.tableBase[1].columnData[i];
                     break;
                 }
             }
+
+            float newGPA = getGPA(studentID, courseID, stoi(grade), 1);
+
             // нужно пересчитать средний балл
             for (int i = 0; i < gpa.tableBase[0].columnData.size(); i++) {
                 for (int j = 0; j < gpa.columnsNames.size(); j++) {
                     if (gpa.tableBase[0].columnData[i] == studentName && gpa.columnsNames[j] == courseName) {
-                        int newGPA = getGPA(studentID, courseID, stoi(grade), 1);
-                        gpa.tableBase[j].columnData[i] = to_string(newGPA);
+                        gpa.tableBase[j].columnData[i] = to_string(ceil(newGPA * 100) / 100).substr(0, 4);
+                        break;
                     }
                 }
             }
@@ -548,7 +524,7 @@ bool offerOptions() {
     cout << "\nPlease, choose what you would like to to do and type the number of chosen option (for example: 1).";
     cout << "\n1) Show table."; // Показать таблицу
     cout << "\n2) Show all tables."; // Показать все таблицы
-    cout << "\n3) Get student's GPA."; // получить средний балл ученика
+    cout << "\n3) Get GPA-info."; // получить средний балл ученика
     cout << "\n4) Change table."; // Изменить таблицу
     cout << "\n5) Finish work and exit.\n"; // Завершить работу программы
 
@@ -587,23 +563,18 @@ bool offerOptions() {
     else if (request == "2") {
         students.showTheTable();
         cout << endl;
+
         courses.showTheTable();
         cout << endl;
+
         grades.showTheTable();
         cout << endl;
         return true;
-        // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
     }
     // получить средний балл ученика - DONE
     else if (request == "3") {
         gpa.showTheTable();
         return true;
-        //cout << "\nPlease, enter student's ID and subject's ID separated by a space.\n";
-        //string studentID = "", subjectID = "";
-        //cin >> studentID >> subjectID;
-        //getGPA(studentID, subjectID);
-        //return true;
-        // cout << "\nIf you want to exit, type down the code -1 (for example: -1).";
     }
     // Изменить таблицу
     else if (request == "4") {

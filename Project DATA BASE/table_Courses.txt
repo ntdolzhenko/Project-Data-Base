@@ -5,4 +5,3 @@ id Course_name
 1 Math 
 2 Literature 
 5 Science 
-9 English 
