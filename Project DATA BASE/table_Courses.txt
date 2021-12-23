@@ -4,6 +4,5 @@ id Course_name
 0 History 
 1 Math 
 2 Literature 
-3 Music 
-4 English 
 5 Science 
+9 English 
